@@ -25,14 +25,14 @@ jobs:
     - name: Test with dotnet
       run: dotnet test ./eShopOnWeb.sln --configuration Release
       
-    - name: Publish with dotnet
-      run: dotnet test ./eShopOnWeb.sln -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
-      
-   
     #Connect to Azure
     - uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Publish with dotnet
+      run: dotnet test ./eShopOnWeb.sln -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
+      
     #Deploy to Azure Web Apps 
     - name: 'Run Azure webapp deploy action using publish profile credentials'
       uses: azure/webapps-deploy@v2
